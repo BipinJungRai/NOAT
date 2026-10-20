@@ -107,7 +107,7 @@ The Main Dashboard opens. Now read [the manual](Manual/00%20Start%20here.md), st
 | Feature | What it does for you |
 | --- | --- |
 | 🏠 **Main Dashboard** | Today's term week, upcoming deadlines, your to-dos and your weakest topics, on one page |
-| 📚 **Module dashboards** | MG406, MG472, MG481, MG487 and MG496 are ready to use. Add assessment deadlines and other important dates yourself as they come up throughout term |
+| 📚 **Module dashboards** | MG406, MG472, MG481, MG487 and MG496 are ready to go, with their deadlines already added |
 | 🧠 **Understanding ratings** | Rate each class 🔴 No clue → 🟢 Solid, drag cards on a board, and get a "revise next" list |
 | 🎯 **Deadline countdowns** | Every exam, essay and project, colour-coded by how soon it's due |
 | 💡 **Concept notes** | One idea per note, in your own words. They work like flashcards you can always come back to |
@@ -171,7 +171,7 @@ Step by step, including the couple of pages you'll need to edit by hand: [Using 
 
 ## Your notes link together
 
-In Obsidian, any note can link to any other: type `[[`, pick a note, and they're connected. Link a lecture to the ideas it covered, the reading behind them and the seminar where you discussed them, and months later one click shows everything connected to an idea.
+In Obsidian, any note can link to any other. Put the note's name inside double square brackets, like `[[Network effect]]`, and the two notes are connected. You don't even need to type it all: start with `[[`, and Obsidian suggests matching notes and adds the closing `]]` for you. Link a lecture to the ideas it covered, the reading behind them and the seminar where you discussed them, and months later one click shows everything connected to an idea.
 
 The graph view draws those links as a map. Here's my own vault a few weeks into term. Hovering over one module lights up everything linked to it:
 
