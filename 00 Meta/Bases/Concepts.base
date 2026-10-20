@@ -1,0 +1,54 @@
+filters:
+  and:
+    - file.inFolder("01 UNI/02 Concepts")
+    - file.ext == "md"
+    - not:
+        - file.name.startsWith("📊")
+formulas:
+  wk: if(!week.isEmpty(), "W" + week, if(!note["source-lecture"].isEmpty(), "W" + note["source-lecture"].asFile().properties.week, "—"))
+properties:
+  file.name:
+    displayName: Concept
+  note.course:
+    displayName: Module
+  note.understanding:
+    displayName: Understanding
+  note.source-lecture:
+    displayName: From
+  formula.wk:
+    displayName: Week
+views:
+  - type: table
+    name: 💡 All concepts
+    groupBy:
+      property: note.course
+      direction: ASC
+    order:
+      - file.name
+      - course
+      - understanding
+      - source-lecture
+      - formula.wk
+      - tags
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 260
+      note.understanding: 150
+      note.source-lecture: 300
+  - type: kanban
+    name: 🧠 Concept board
+    groupBy:
+      property: note.understanding
+      direction: ASC
+    groupOrder:
+      - null
+      - 🔴 No clue
+      - 🟠 Shaky
+      - 🟡 Getting there
+      - 🟢 Solid
+    order:
+      - file.name
+      - course
+      - formula.wk

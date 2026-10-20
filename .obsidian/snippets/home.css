@@ -1,0 +1,59 @@
+/*
+Home dashboard snippet.
+Only affects callouts written as  > [!nav]  so nothing else in the vault changes.
+Each top-level bullet becomes a card; its sub-bullets are the links in that card.
+*/
+
+.callout[data-callout="nav"] {
+    --callout-color: var(--color-accent-rgb);
+    background: transparent;
+    border: none;
+    padding: 0;
+    mix-blend-mode: normal;
+}
+
+.callout[data-callout="nav"] > .callout-title {
+    display: none;
+}
+
+.callout[data-callout="nav"] > .callout-content > ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.callout[data-callout="nav"] > .callout-content > ul > li {
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin: 0;
+}
+
+.callout[data-callout="nav"] ul ul {
+    list-style: none;
+    padding: 0;
+    margin: 6px 0 0 0;
+}
+
+.callout[data-callout="nav"] li {
+    margin-inline-start: 0 !important;
+    padding-inline-start: 0 !important;
+}
+
+.callout[data-callout="nav"] li::marker,
+.callout[data-callout="nav"] .list-bullet,
+.callout[data-callout="nav"] .list-collapse-indicator {
+    display: none !important;
+}
+
+.callout[data-callout="nav"] ul ul::before {
+    display: none !important;
+}
+
+.callout[data-callout="nav"] ul ul li {
+    padding: 2px 0;
+}

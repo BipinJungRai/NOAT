@@ -1,0 +1,12 @@
+{
+  "cssTheme": "Atom",
+  "accentColor": "#7d58d5",
+  "theme": "system",
+  "enabledCssSnippets": [
+    "calander animations",
+    "note-width",
+    "folder-blocks_1",
+    "home"
+  ],
+  "translucency": false
+}

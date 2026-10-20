@@ -1,0 +1,125 @@
+filters:
+  and:
+    - file.inFolder("01 UNI")
+    - file.ext == "md"
+    - not:
+        - file.name.startsWith("📊")
+        - file.hasProperty("code")
+formulas:
+  wk: if(!week.isEmpty(), "W" + week, if(!note["source-lecture"].isEmpty(), "W" + note["source-lecture"].asFile().properties.week, "—"))
+  due_in: if(status == "Submitted" || status == "Graded" || status == "Done", "✅ " + status, if(due.isEmpty(), if(due_note.isEmpty(), "❔ TBC", "🗓️ " + due_note), if(date(due) < today(), "⚫ Passed", if(date(due) < today() + "8d", "🔴 " + date(due).relative(), if(date(due) < today() + "22d", "🟠 " + date(due).relative(), "🟢 " + date(due).relative())))))
+  due_sort: if(due.isEmpty(), date("2099-12-31"), date(due))
+properties:
+  file.name:
+    displayName: Note
+  note.course:
+    displayName: Module
+  note.type:
+    displayName: Type
+  note.understanding:
+    displayName: Understanding
+  note.progress:
+    displayName: Notes
+  note.weight:
+    displayName: Weight
+  note.due:
+    displayName: Due
+  note.status:
+    displayName: Status
+  formula.wk:
+    displayName: Week
+  formula.due_in:
+    displayName: Countdown
+views:
+  - type: table
+    name: 🎯 Deadlines
+    filters:
+      and:
+        - or:
+            - type == "Assessment"
+            - type == "Deadline"
+    order:
+      - file.name
+      - course
+      - weight
+      - formula.due_in
+      - due
+      - status
+    sort:
+      - property: due
+        direction: DESC
+      - property: formula.due_in
+        direction: ASC
+      - property: formula.due_sort
+        direction: ASC
+    columnSize:
+      file.name: 300
+      note.course: 105
+      formula.due_in: 200
+  - type: table
+    name: 🗓️ This week
+    filters:
+      and:
+        - today() - "7d" <= note.date
+        - type != "Assessment"
+        - type != "Deadline"
+    groupBy:
+      property: course
+      direction: ASC
+    order:
+      - file.name
+      - type
+      - understanding
+      - progress
+      - date
+    sort:
+      - property: date
+        direction: DESC
+    columnSize:
+      file.name: 380
+      note.understanding: 150
+  - type: table
+    name: 🔁 Weak spots
+    filters:
+      or:
+        - understanding == "🔴 No clue"
+        - understanding == "🟠 Shaky"
+    groupBy:
+      property: course
+      direction: ASC
+    order:
+      - file.name
+      - understanding
+      - type
+      - formula.wk
+    sort:
+      - property: understanding
+        direction: ASC
+    columnSize:
+      file.name: 380
+      note.understanding: 150
+  - type: kanban
+    name: ✍️ To write up
+    filters:
+      and:
+        - or:
+            - file.inFolder("01 UNI/01 Modules")
+            - file.inFolder("01 UNI/03 Literature")
+        - or:
+            - progress == "📝 Brief notes"
+            - progress == "✍️ Writing up"
+    groupBy:
+      property: progress
+      direction: ASC
+    groupOrder:
+      - 📝 Brief notes
+      - ✍️ Writing up
+      - ✅ Complete
+    order:
+      - file.name
+      - course
+      - type
+      - formula.wk
+    sort:
+      - property: date
+        direction: ASC

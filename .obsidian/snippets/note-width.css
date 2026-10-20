@@ -1,0 +1,31 @@
+/* ==========================================================
+   Per-note width snippet
+   ----------------------------------------------------------
+   Use in a note's frontmatter:
+
+   cssclasses:
+     - wide-page     (full pane width)
+     - medium-page   (about 1000px)
+
+   Requires: Settings > Editor > Readable line length = ON
+   ========================================================== */
+
+/* ---- Default theme and most community themes ---- */
+body .wide-page {
+  --file-line-width: 100%;
+}
+
+body .medium-page {
+  --file-line-width: 1000px;
+}
+
+/* ---- Minimal theme (uses its own width variables) ---- */
+body.minimal-theme .wide-page {
+  --line-width: 100%;
+  --max-width: 100%;
+}
+
+body.minimal-theme .medium-page {
+  --line-width: 1000px;
+  --max-width: 100%;
+}

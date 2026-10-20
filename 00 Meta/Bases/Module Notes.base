@@ -1,0 +1,257 @@
+filters:
+  and:
+    - file.name != this.file.name
+formulas:
+  wk: if(week.isEmpty(), "No week yet", if(week < 10, "Week 0" + week, "Week " + week))
+  term_auto: if(!note.date, "—", if(note.date < "2027-01-01", "🍁 AT", if(note.date < "2027-04-15", "☃️ WT", "🌱 ST")))
+  due_in: if(status == "Submitted" || status == "Graded" || status == "Done", "✅ " + status, if(due.isEmpty(), if(due_note.isEmpty(), "❔ TBC", "🗓️ " + due_note), if(date(due) < today(), "⚫ Passed", if(date(due) < today() + "8d", "🔴 " + date(due).relative(), if(date(due) < today() + "22d", "🟠 " + date(due).relative(), "🟢 " + date(due).relative())))))
+  due_sort: if(due.isEmpty(), date("2099-12-31"), date(due))
+  rating: if(understanding, understanding, "⚪ Not rated")
+  revise_order: if(understanding == "🔴 No clue", 1, if(understanding == "🟠 Shaky", 2, if(!understanding, 3, if(understanding == "🟡 Getting there", 4, 5))))
+properties:
+  file.name:
+    displayName: Note
+  note.type:
+    displayName: Type
+  note.understanding:
+    displayName: Understanding
+  note.progress:
+    displayName: Notes
+  note.date:
+    displayName: Date
+  note.lecturer:
+    displayName: Lecturer
+  note.materials:
+    displayName: Materials
+  note.source-lecture:
+    displayName: From
+  note.weight:
+    displayName: Weight
+  note.due:
+    displayName: Due
+  note.status:
+    displayName: Status
+  note.grade:
+    displayName: Grade
+  note.tags:
+    displayName: Tags
+  formula.wk:
+    displayName: Week
+  formula.term_auto:
+    displayName: Term
+  formula.due_in:
+    displayName: Countdown
+  formula.rating:
+    displayName: Understanding
+views:
+  - type: table
+    name: 🗓️ Classes
+    filters:
+      and:
+        - file.inFolder(this.file.folder)
+        - file.ext == "md"
+        - course == this.file
+        - type != "Reading"
+        - type != "Case"
+        - type != "Assessment"
+        - type != "Deadline"
+    groupBy:
+      property: formula.wk
+      direction: DESC
+    order:
+      - file.name
+      - type
+      - understanding
+      - progress
+      - date
+      - lecturer
+      - materials
+      - week
+      - tags
+    sort:
+      - property: date
+        direction: ASC
+    columnSize:
+      file.name: 360
+      note.understanding: 150
+      note.progress: 140
+      note.materials: 260
+  - type: kanban
+    name: 🧠 Understanding board
+    filters:
+      and:
+        - file.inFolder(this.file.folder)
+        - file.ext == "md"
+        - course == this.file
+        - type != "Reading"
+        - type != "Case"
+        - type != "Assessment"
+        - type != "Deadline"
+    groupBy:
+      property: understanding
+      direction: ASC
+    groupOrder:
+      - 
+      - 🔴 No clue
+      - 🟠 Shaky
+      - 🟡 Getting there
+      - 🟢 Solid
+    order:
+      - file.name
+      - type
+      - formula.wk
+    sort:
+      - property: date
+        direction: ASC
+  - type: kanban
+    name: ✍️ Notes board
+    filters:
+      and:
+        - file.inFolder(this.file.folder)
+        - file.ext == "md"
+        - course == this.file
+        - type != "Reading"
+        - type != "Case"
+        - type != "Assessment"
+        - type != "Deadline"
+    groupBy:
+      property: progress
+      direction: ASC
+    groupOrder:
+      - 
+      - 📝 Brief notes
+      - ✍️ Writing up
+      - ✅ Complete
+    order:
+      - file.name
+      - type
+      - formula.wk
+    sort:
+      - property: date
+        direction: ASC
+  - type: table
+    name: 🔁 Revise next
+    filters:
+      and:
+        - file.inFolder(this.file.folder)
+        - file.ext == "md"
+        - course == this.file
+        - type != "Reading"
+        - type != "Case"
+        - type != "Assessment"
+        - type != "Deadline"
+        - understanding != "🟢 Solid"
+        - not:
+            - file.hasTag("MOC")
+            - file.hasTag("synthesis")
+    order:
+      - file.name
+      - understanding
+      - type
+      - formula.wk
+    sort:
+      - property: formula.revise_order
+        direction: ASC
+      - property: date
+        direction: ASC
+    limit: 8
+    columnSize:
+      file.name: 360
+      note.understanding: 150
+  - type: table
+    name: 🎯 Deadlines
+    filters:
+      and:
+        - file.inFolder(this.file.folder + "/Deadlines")
+        - file.ext == "md"
+        - course == this.file
+        - or:
+            - type == "Assessment"
+            - type == "Deadline"
+    order:
+      - file.name
+      - weight
+      - formula.due_in
+      - due
+      - status
+      - grade
+      - tags
+    sort:
+      - property: formula.due_sort
+        direction: ASC
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 300
+      formula.due_in: 200
+  - type: table
+    name: 📖 Cases & Readings
+    filters:
+      and:
+        - file.inFolder("01 UNI/03 Literature")
+        - file.ext == "md"
+        - course == this.file
+        - not:
+            - file.name.startsWith("📊")
+    groupBy:
+      property: formula.rating
+      direction: ASC
+    order:
+      - file.name
+      - type
+      - week
+      - understanding
+      - progress
+      - materials
+      - authors
+      - tags
+    sort:
+      - property: week
+        direction: ASC
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 260
+      note.type: 110
+      note.week: 80
+      note.understanding: 130
+      note.progress: 120
+      note.materials: 280
+  - type: table
+    name: 💡 Concepts
+    filters:
+      and:
+        - file.inFolder("01 UNI/02 Concepts")
+        - file.ext == "md"
+        - course == this.file
+    order:
+      - file.name
+      - understanding
+      - source-lecture
+      - tags
+    sort:
+      - property: understanding
+        direction: ASC
+    columnSize:
+      file.name: 260
+      note.source-lecture: 300
+  - type: table
+    name: 📎 Files
+    filters:
+      and:
+        - file.inFolder(this.file.folder)
+        - file.ext != "md"
+        - file.ext != "mdb"
+        - file.ext != "json"
+    groupBy:
+      property: file.folder
+      direction: ASC
+    order:
+      - file.name
+      - file.ext
+      - file.mtime
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 560

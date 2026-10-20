@@ -1,0 +1,114 @@
+filters:
+  and:
+    - file.inFolder("01 UNI/03 Literature")
+    - not:
+        - file.name.startsWith("📊")
+formulas:
+  wk: if(!week.isEmpty(), "W" + week, "—")
+properties:
+  file.name:
+    displayName: Note
+  note.course:
+    displayName: Module
+  note.type:
+    displayName: Type
+  note.week:
+    displayName: Week
+  note.understanding:
+    displayName: Understanding
+  note.progress:
+    displayName: Notes
+  note.materials:
+    displayName: PDF / Materials
+  note.authors:
+    displayName: Authors
+  formula.wk:
+    displayName: Week
+views:
+  - type: table
+    name: 📖 All cases & readings
+    filters:
+      and:
+        - file.ext == "md"
+    groupBy:
+      property: course
+      direction: ASC
+    order:
+      - file.name
+      - course
+      - type
+      - week
+      - understanding
+      - progress
+      - materials
+      - authors
+    sort:
+      - property: week
+        direction: ASC
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 260
+      note.course: 90
+      note.type: 110
+      note.week: 80
+      note.understanding: 130
+      note.progress: 120
+      note.materials: 280
+  - type: kanban
+    name: 🧠 Understanding board
+    filters:
+      and:
+        - file.ext == "md"
+        - not:
+            - file.hasTag("MOC")
+            - file.hasTag("synthesis")
+    groupBy:
+      property: understanding
+      direction: ASC
+    groupOrder:
+      - 
+      - 🔴 No clue
+      - 🟠 Shaky
+      - 🟡 Getting there
+      - 🟢 Solid
+    order:
+      - file.name
+      - type
+      - course
+      - formula.wk
+  - type: kanban
+    name: ✍️ Notes board
+    filters:
+      and:
+        - file.ext == "md"
+        - not:
+            - file.hasTag("MOC")
+            - file.hasTag("synthesis")
+    groupBy:
+      property: progress
+      direction: ASC
+    groupOrder:
+      - 
+      - 📝 Brief notes
+      - ✍️ Writing up
+      - ✅ Complete
+    order:
+      - file.name
+      - type
+      - course
+      - formula.wk
+  - type: table
+    name: 📎 All PDFs
+    filters:
+      and:
+        - file.ext != "md"
+    order:
+      - file.name
+      - file.ext
+      - file.mtime
+    sort:
+      - property: file.name
+        direction: ASC
+    columnSize:
+      file.name: 560

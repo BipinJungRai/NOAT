@@ -1,0 +1,191 @@
+/* =====================================================================
+   Folder Blocks for the Obsidian file explorer  (v3, Obsidian 1.6+)
+
+   - Every folder is a solid coloured block (no gradients)
+   - Notes inside a folder sit on that folder's colour
+   - Each child folder is its own block in a DIFFERENT colour,
+     nested inside its parent, so you can see where it starts and ends
+   - Text is always dark and readable; hover makes it bold and darkens
+     the row in the same colour (never turns white)
+
+   ===================================================================== */
+
+
+/* ---------- 1. Settings ---------- */
+body {
+  --fb-light: 0.87;
+  /* block brightness  (0 = black, 1 = white)         */
+  --fb-chroma: 0.075;
+  /* colour strength   (0 = grey, 0.15 = very vivid)  */
+  --fb-shift: 70;
+  /* how different a child's colour is from its parent */
+  --fb-radius: 10px;
+  /* corner roundness                                  */
+  --fb-gap: 5px;
+  /* space between blocks                              */
+}
+
+
+/* ---------- 2. Starting colour for each top-level folder ----------
+   Hue numbers: 0/350 pink, 30 orange, 60 amber, 110 lime, 150 green,
+   200 teal, 250 blue, 300 violet.                                      */
+:where(.nav-files-container > div > .nav-folder:nth-child(6n+1 of .nav-folder)) {
+  --h1: 350;
+}
+
+:where(.nav-files-container > div > .nav-folder:nth-child(6n+2 of .nav-folder)) {
+  --h1: 250;
+}
+
+:where(.nav-files-container > div > .nav-folder:nth-child(6n+3 of .nav-folder)) {
+  --h1: 150;
+}
+
+:where(.nav-files-container > div > .nav-folder:nth-child(6n+4 of .nav-folder)) {
+  --h1: 60;
+}
+
+:where(.nav-files-container > div > .nav-folder:nth-child(6n+5 of .nav-folder)) {
+  --h1: 300;
+}
+
+:where(.nav-files-container > div > .nav-folder:nth-child(6n+6 of .nav-folder)) {
+  --h1: 200;
+}
+
+/* Pin a top-level folder to a colour by its exact name (never shifts) */
+.nav-folder:has(> .nav-folder-title[data-path="00 Meta"]) {
+  --h1: 350 !important;
+}
+
+.nav-folder:has(> .nav-folder-title[data-path="01 Modules"]) {
+  --h1: 250 !important;
+}
+
+
+/* ---------- 3. Each level shifts the colour from its parent ---------- */
+.nav-files-container>div>.nav-folder {
+  --h: var(--h1);
+
+  &>.nav-folder-children>.nav-folder {
+    --h2: calc(var(--h1) + var(--fb-shift));
+    --h: var(--h2);
+
+    &>.nav-folder-children>.nav-folder {
+      --h3: calc(var(--h2) + var(--fb-shift));
+      --h: var(--h3);
+
+      &>.nav-folder-children>.nav-folder {
+        --h4: calc(var(--h3) + var(--fb-shift));
+        --h: var(--h4);
+
+        &>.nav-folder-children>.nav-folder {
+          --h5: calc(var(--h4) + var(--fb-shift));
+          --h: var(--h5);
+
+          &>.nav-folder-children>.nav-folder {
+            --h6: calc(var(--h5) + var(--fb-shift));
+            --h: var(--h6);
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/* ---------- 4. Colours built from the hue ---------- */
+.nav-files-container .nav-folder {
+  --fb-bg: oklch(var(--fb-light) var(--fb-chroma) var(--h));
+  --fb-hover: oklch(calc(var(--fb-light) - 0.08) calc(var(--fb-chroma) + 0.03) var(--h));
+  --fb-active: oklch(calc(var(--fb-light) - 0.15) calc(var(--fb-chroma) + 0.05) var(--h));
+  --fb-ink: oklch(0.27 0.06 var(--h));
+  /* dark text in the same colour family */
+
+  /* Tell Obsidian's own styles to use these too */
+  --nav-item-color: var(--fb-ink);
+  --nav-item-color-hover: var(--fb-ink);
+  --nav-item-color-active: var(--fb-ink);
+  --nav-item-background-hover: var(--fb-hover);
+  --nav-item-background-active: var(--fb-active);
+  --nav-collapse-icon-color: var(--fb-ink);
+  --nav-collapse-icon-color-collapsed: var(--fb-ink);
+  --nav-indentation-guide-color: color-mix(in srgb, var(--fb-ink) 25%, transparent);
+}
+
+
+/* ---------- 5. The blocks ---------- */
+.nav-files-container .nav-folder {
+  background-color: var(--fb-bg);
+  border-radius: var(--fb-radius);
+  margin-block-end: var(--fb-gap);
+  padding-block: 2px;
+  overflow: hidden;
+  /* keeps rows inside their block */
+}
+
+/* Child blocks: inset from the right so the parent colour frames them */
+.nav-files-container .nav-folder-children .nav-folder {
+  margin-block: var(--fb-gap);
+  margin-inline-end: 6px;
+  border-radius: calc(var(--fb-radius) - 2px);
+}
+
+
+/* ---------- 6. Text ---------- */
+/* Folder names: bold, dark */
+.nav-files-container .nav-folder-title,
+.nav-files-container .nav-folder-title .nav-folder-title-content {
+  color: var(--fb-ink) !important;
+  font-weight: 600;
+}
+
+/* Notes inside a folder: same colour family as that folder, normal weight */
+.nav-files-container .nav-folder .nav-file-title,
+.nav-files-container .nav-folder .nav-file-title .nav-file-title-content {
+  color: var(--fb-ink) !important;
+  font-weight: 450;
+}
+
+/* Arrows */
+.nav-files-container .nav-folder-collapse-indicator,
+.nav-files-container .nav-folder-collapse-indicator svg {
+  color: var(--fb-ink) !important;
+}
+
+/* The PDF / file-type badge */
+.nav-files-container .nav-folder .nav-file-tag {
+  color: var(--fb-ink);
+  background-color: color-mix(in srgb, var(--fb-ink) 12%, transparent);
+}
+
+
+/* ---------- 7. Hover and the open note ---------- */
+/* Hover: row darkens in its own colour, text goes bold, stays dark */
+.nav-files-container .nav-folder .nav-folder-title:hover,
+.nav-files-container .nav-folder .nav-file-title:hover {
+  background-color: var(--fb-hover) !important;
+  color: var(--fb-ink) !important;
+}
+
+.nav-files-container .nav-folder .nav-folder-title:hover .nav-folder-title-content,
+.nav-files-container .nav-folder .nav-file-title:hover .nav-file-title-content {
+  color: var(--fb-ink) !important;
+  font-weight: 700;
+}
+
+/* The note you have open: stronger shade, bold */
+.nav-files-container .nav-folder .nav-file-title.is-active {
+  background-color: var(--fb-active) !important;
+  color: var(--fb-ink) !important;
+}
+
+.nav-files-container .nav-folder .nav-file-title.is-active .nav-file-title-content {
+  color: var(--fb-ink) !important;
+  font-weight: 700;
+}
+
+/* Keyboard / selection outline in the folder's own ink colour */
+.nav-files-container .nav-folder .has-focus {
+  box-shadow: 0 0 0 1.5px var(--fb-ink) inset !important;
+}

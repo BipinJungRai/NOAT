@@ -1,0 +1,58 @@
+# =====================================================================
+# NOAT .gitignore
+# Keeps your own test data, caches and per-computer settings out of the
+# repo, so only the useful template files get pushed.
+# =====================================================================
+
+# --- Obsidian: per-computer layout and caches ---
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/workspaces.json
+.obsidian/bookmarks.json
+.obsidian/cache
+.obsidian/icons/
+.obsidian/plugins/*/cache/
+.obsidian/plugins/doc-preview/preview-cache/
+.obsidian/copilot-index-*.json
+.trash/
+
+# --- Things you add while testing (the template ships these folders empty) ---
+# Pasted screenshots
+00 Meta/Attachments/*
+!00 Meta/Attachments/.gitkeep
+# Lecture slides and handouts (lecturers' copyright)
+01 UNI/01 Modules/*/00 Meta/*
+!01 UNI/01 Modules/*/00 Meta/.gitkeep
+# Reading and case PDFs
+01 UNI/03 Literature/PDFs/*
+!01 UNI/03 Literature/PDFs/.gitkeep
+# Book PDFs and ebooks
+Books/**/*.pdf
+Books/**/*.epub
+# Daily notes, drawings and downloaded banners
+Daily Notes/*
+!Daily Notes/.gitkeep
+Excalidraw/*
+!Excalidraw/.gitkeep
+pixel-banner-images/*
+!pixel-banner-images/.gitkeep
+# Notes made with + New and never renamed
+Untitled*
+
+# --- Computer junk ---
+.DS_Store
+._*
+__MACOSX/
+Thumbs.db
+desktop.ini
+
+# --- Other apps' and plugins' folders ---
+.smart-env/
+.copilot/
+.claudian/
+.makemd/
+.space/
+.opencode/
+.keep-the-rhythm/
+.vscode/
+.idea/

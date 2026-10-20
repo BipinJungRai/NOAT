@@ -1,0 +1,133 @@
+filters:
+  and:
+    - file.inFolder("Books")
+    - file.name != "📊 Books Dashboard"
+formulas:
+  shelf: if(status == "Reading", "1 · 📖 Reading", if(status == "To read", "2 · 📚 To read", if(status == "Finished", "3 · ✅ Finished", if(status == "Abandoned", "4 · 💤 Abandoned", "0 · ❔ No status"))))
+  stars: if(rating >= 5, "⭐⭐⭐⭐⭐", if(rating >= 4, "⭐⭐⭐⭐", if(rating >= 3, "⭐⭐⭐", if(rating >= 2, "⭐⭐", if(rating >= 1, "⭐", "")))))
+  book_folder: file.folder.split("/").slice(1).join("/")
+properties:
+  file.name:
+    displayName: Book
+  note.author:
+    displayName: Author
+  note.topic:
+    displayName: Topic
+  note.started:
+    displayName: Started
+  note.finished:
+    displayName: Finished
+  note.reviewed:
+    displayName: Reviewed
+  note.pdf:
+    displayName: PDF
+  formula.shelf:
+    displayName: Shelf
+  formula.stars:
+    displayName: Rating
+  formula.book_folder:
+    displayName: Book
+views:
+  - type: cards
+    name: 📚 Bookshelf
+    filters:
+      and:
+        - file.ext == "md"
+    groupBy:
+      property: formula.shelf
+      direction: ASC
+    order:
+      - file.name
+      - author
+      - formula.stars
+      - topic
+    image: note.cover
+    imageFit: contain
+    imageAspectRatio: 1.4
+    cardSize: 200
+  - type: kanban
+    name: 🗂️ Reading board
+    filters:
+      and:
+        - file.ext == "md"
+    groupBy:
+      property: note.status
+      direction: ASC
+    groupOrder:
+      - null
+      - To read
+      - Reading
+      - Finished
+      - Abandoned
+    order:
+      - file.name
+      - author
+      - formula.stars
+    image: note.cover
+    imageFit: contain
+  - type: table
+    name: 📖 Reading now
+    filters:
+      and:
+        - file.ext == "md"
+        - status == "Reading"
+    order:
+      - file.name
+      - author
+      - started
+      - topic
+      - rating
+      - pdf
+      - reviewed
+    columnSize:
+      file.name: 380
+  - type: table
+    name: 📝 Book notes
+    filters:
+      and:
+        - file.ext == "md"
+    order:
+      - file.name
+      - author
+      - formula.shelf
+      - formula.stars
+      - topic
+      - finished
+      - reviewed
+      - pdf
+    sort:
+      - property: formula.shelf
+        direction: DESC
+      - property: finished
+        direction: DESC
+    columnSize:
+      file.name: 380
+  - type: table
+    name: 🔁 Needs review
+    filters:
+      and:
+        - file.ext == "md"
+        - reviewed != true
+    order:
+      - file.name
+      - author
+      - formula.shelf
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: ASC
+  - type: table
+    name: 📄 PDF library
+    filters:
+      and:
+        - file.ext == "pdf"
+    order:
+      - formula.book_folder
+      - file.name
+      - file.size
+    sort:
+      - property: file.folder
+        direction: ASC
+    columnSize:
+      formula.book_folder: 220
+      file.name: 520

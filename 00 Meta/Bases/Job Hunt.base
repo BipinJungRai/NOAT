@@ -1,0 +1,182 @@
+filters:
+  and:
+    - file.inFolder("Job Hunt")
+    - file.ext == "md"
+    - file.hasTag("job-application")
+formulas:
+  stage: if(status == "Not applied", "1 · 📝 Not applied", if(status == "Applied", "3 · 📨 Applied", if(status == "Online test", "4 · 🧪 Online test", if(status == "Interview", "5 · 🗣️ Interview", if(status == "Assessment centre", "6 · 🏢 Assessment centre", if(status == "Offer", "7 · 🎉 Offer", if(status == "Rejected", "8 · ❌ Rejected", if(status == "Withdrawn", "9 · ↩️ Withdrawn", if(status == "Closed", "9 · 🔒 Closed", "0 · ❔ Check status")))))))))
+  closes: if(!deadline, if(rolling, "🌀 Rolling, apply ASAP", "—"), if(date(deadline) < today(), "⚫ Passed", if(date(deadline) < today() + "1d", "🔴 TODAY", if(date(deadline) < today() + "4d", "🔴 " + date(deadline).relative(), if(date(deadline) < today() + "8d", "🟠 " + date(deadline).relative(), if(date(deadline) < today() + "15d", "🟡 " + date(deadline).relative(), "🟢 " + date(deadline).relative()))))))
+  next_up: if(!next_step, "—", if(next_step_date, next_step + " · " + date(next_step_date).format("ddd D MMM"), next_step))
+  chase: if(status == "Applied" && applied_date && !next_step && date(applied_date) < today() - "21d", "📞 Chase / check portal", "")
+properties:
+  file.name:
+    displayName: Application
+  note.company:
+    displayName: Company
+  note.role:
+    displayName: Role
+  note.programme:
+    displayName: Programme
+  note.career_path:
+    displayName: Path
+  note.location:
+    displayName: Location
+  note.deadline:
+    displayName: Deadline
+  note.applied_date:
+    displayName: Applied on
+  note.link:
+    displayName: Listing
+  note.status:
+    displayName: Status
+  note.next_step:
+    displayName: Next step
+  note.next_step_date:
+    displayName: Next step date
+  note.outcome_reason:
+    displayName: Why
+  note.sponsorship:
+    displayName: Visa
+  note.salary:
+    displayName: Salary
+  formula.stage:
+    displayName: Stage
+  formula.closes:
+    displayName: Closes
+  formula.next_up:
+    displayName: Next step
+  formula.chase:
+    displayName: Follow up
+views:
+  - type: table
+    name: 🔥 To apply
+    filters:
+      and:
+        - status == "Not applied"
+    order:
+      - file.name
+      - company
+      - role
+      - formula.closes
+      - deadline
+      - link
+      - programme
+      - location
+      - sponsorship
+    sort:
+      - property: deadline
+        direction: ASC
+    columnSize:
+      file.name: 300
+      formula.closes: 170
+  - type: kanban
+    name: 🗂️ Board
+    groupBy:
+      property: status
+      direction: ASC
+    groupOrder:
+      - Not applied
+      - Applied
+      - Online test
+      - Interview
+      - Assessment centre
+      - Offer
+      - Rejected
+      - Withdrawn
+      - Closed
+    order:
+      - file.name
+      - formula.closes
+      - formula.next_up
+    image: note.banner
+    imageFit: cover
+  - type: table
+    name: 📨 In progress
+    filters:
+      or:
+        - status == "Applied"
+        - status == "Online test"
+        - status == "Interview"
+        - status == "Assessment centre"
+    groupBy:
+      property: formula.stage
+      direction: ASC
+    order:
+      - file.name
+      - status
+      - next_step
+      - next_step_date
+      - applied_date
+      - formula.chase
+      - link
+    sort:
+      - property: status
+        direction: ASC
+      - property: next_step
+        direction: ASC
+      - property: next_step_date
+        direction: ASC
+    columnSize:
+      file.name: 219
+      note.status: 93
+      note.next_step: 260
+  - type: table
+    name: ⏰ Closing in 14 days
+    filters:
+      and:
+        - deadline
+        - date(deadline) >= today()
+        - date(deadline) < today() + "15d"
+        - or:
+            - status == "Not applied"
+            - status.isEmpty()
+    order:
+      - file.name
+      - formula.closes
+      - link
+    sort:
+      - property: deadline
+        direction: ASC
+    columnSize:
+      file.name: 320
+      formula.closes: 170
+  - type: table
+    name: 📋 Everything
+    groupBy:
+      property: formula.stage
+      direction: ASC
+    order:
+      - file.name
+      - company
+      - role
+      - status
+      - programme
+      - career_path
+      - location
+      - deadline
+      - applied_date
+      - salary
+      - sponsorship
+      - link
+    sort:
+      - property: deadline
+        direction: ASC
+  - type: table
+    name: 🗄️ Outcomes
+    filters:
+      or:
+        - status == "Offer"
+        - status == "Rejected"
+        - status == "Withdrawn"
+        - status == "Closed"
+    order:
+      - file.name
+      - status
+      - applied_date
+      - outcome_reason
+    sort:
+      - property: file.mtime
+        direction: DESC
+    columnSize:
+      file.name: 320
+      note.outcome_reason: 300
