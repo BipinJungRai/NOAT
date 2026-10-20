@@ -107,7 +107,7 @@ The Main Dashboard opens. Now read [the manual](Manual/00%20Start%20here.md), st
 | Feature | What it does for you |
 | --- | --- |
 | 🏠 **Main Dashboard** | Today's term week, upcoming deadlines, your to-dos and your weakest topics, on one page |
-| 📚 **Module dashboards** | MG406, MG472, MG481, MG487 and MG496 are ready to go, with their deadlines already added |
+| 📚 **Module dashboards** | MG406, MG472, MG481, MG487 and MG496 are ready to use. Add assessment deadlines and other important dates yourself as they come up throughout term |
 | 🧠 **Understanding ratings** | Rate each class 🔴 No clue → 🟢 Solid, drag cards on a board, and get a "revise next" list |
 | 🎯 **Deadline countdowns** | Every exam, essay and project, colour-coded by how soon it's due |
 | 💡 **Concept notes** | One idea per note, in your own words. They work like flashcards you can always come back to |
