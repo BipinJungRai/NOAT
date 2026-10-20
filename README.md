@@ -24,6 +24,17 @@ Made by Bipindra Rai, MISDI 2026–27 · [Why I made it](#about)
 | Ideas stuck inside one module | Concepts and readings link across all your modules |
 | Job applications in a spreadsheet you forget to update | An application tracker with deadline countdowns, right next to your uni deadlines |
 
+### Bonus: you'll pick up Markdown along the way
+
+Obsidian notes are written in **Markdown**, a simple way of formatting text with a few symbols, like `# Heading`, `**bold**` and `- bullet point`. It's worth knowing well beyond this vault:
+
+- **GitHub READMEs** (including this page), Jupyter notebooks and most technical documentation are written in Markdown.
+- **Notion, Slack, Microsoft Teams and Discord** all understand at least some of it.
+- **AI tools like ChatGPT and Claude** write their answers in Markdown, and understand it when you use it in your prompts.
+- **Your notes stay plain text files**, so they'll open on any computer, in any app, years from now.
+
+We spend the year studying digital innovation, and many of us are heading into tech and consulting roles. Markdown is a small skill that makes GitHub, documentation and AI tools feel a lot less foreign. You'll learn the basics just by writing notes, and [Obsidian basics](Manual/03%20Obsidian%20basics.md) has a cheat sheet.
+
 ---
 
 ## Get started

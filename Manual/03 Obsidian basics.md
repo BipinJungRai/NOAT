@@ -31,7 +31,7 @@ In Editing view the pencil changes to a 📖 book. Click it to go back to Readin
 
 ## Writing: what you type and what you see
 
-You format notes with a few symbols. You don't need to memorise these, because the toolbar at the top of the note (from the Editing Toolbar plugin) can do most of them with a click.
+You format notes with a few symbols. This is called **Markdown**, and it's worth learning: it's the same formatting used on GitHub, in Notion and Slack, and by AI tools like ChatGPT and Claude. You don't need to memorise these, because the toolbar at the top of the note (from the Editing Toolbar plugin) can do most of them with a click.
 
 | What you type | What you see |
 | --- | --- |

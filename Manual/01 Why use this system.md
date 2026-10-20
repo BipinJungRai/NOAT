@@ -30,6 +30,7 @@ This is NOAT's Main Dashboard, exactly as it looks when you first open it:
 - **Your notes are files on your computer**, not on someone else's server. They work offline.
 - **They're plain text**, so you'll still be able to open them in 10 years, with or without Obsidian.
 - **Notes can link to each other**, which is what makes the dashboards and the [graph view](07%20Linking%20notes%20and%20the%20graph%20view.md) possible.
+- **You'll learn Markdown along the way.** It's the simple formatting Obsidian uses, and it's the same one used on GitHub, in Notion and Slack, and by AI tools like ChatGPT and Claude. A small skill that's handy for MISDI and beyond (see [03 Obsidian basics](03%20Obsidian%20basics.md)).
 
 ## Why concept notes help you learn
 
