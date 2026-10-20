@@ -13,10 +13,10 @@ GitHub is a website where people share projects. **You don't need an account** t
 > [!NOTE]
 > These steps download a ZIP, which is the easiest way. If you'd like to learn a bit of git instead, see **Optional: get NOAT with git** further down this page, then skip to step 4.
 
-1. Open NOAT's GitHub page (the link you were sent). You'll see a list of files and folders, with the README underneath.
+1. Open NOAT's GitHub page: [github.com/BipinJungRai/NOAT](https://github.com/BipinJungRai/NOAT). You'll see a list of files and folders, with the README underneath.
 2. Above that list, on the right, find the green **<> Code** button and click it.
 3. In the menu that opens, click **Download ZIP** (at the bottom).
-4. A file called `noat-main.zip` downloads, usually into your **Downloads** folder.
+4. A file called `NOAT-main.zip` downloads, usually into your **Downloads** folder.
 
 > [!TIP]
 > Don't click on the individual files on GitHub to download them one by one. **Download ZIP** gets everything at once, including the hidden settings that make the dashboards work.
@@ -27,9 +27,9 @@ A ZIP file is a compressed folder, so first you need to unzip it:
 
 | Mac | Windows |
 | --- | --- |
-| Double-click `noat-main.zip`. A folder called `noat-main` appears next to it | Right-click `noat-main.zip`, choose **Extract All…**, then click **Extract** |
+| Double-click `NOAT-main.zip`. A folder called `NOAT-main` appears next to it | Right-click `NOAT-main.zip`, choose **Extract All…**, then click **Extract** |
 
-Then move the `noat-main` folder to where you want your notes to live. You can rename it to anything, e.g. `MISDI Notes`. You can delete the ZIP file afterwards.
+Then move the `NOAT-main` folder to where you want your notes to live. You can rename it to anything, e.g. `MISDI Notes`. You can delete the ZIP file afterwards.
 
 > [!TIP]
 > On Windows, unzipping sometimes creates a folder inside a folder with the same name. The right folder is the one that contains `🏠 Main Dashboard.md`.
@@ -76,17 +76,16 @@ Git is the tool developers use to download projects and keep them up to date. It
 1. **Install git.**
    - **Mac:** open the **Terminal** app, type `git --version` and press Enter. If git isn't installed, your Mac offers to install it. Click **Install**.
    - **Windows:** download **Git for Windows** from [git-scm.com](https://git-scm.com/downloads) and install it with the default settings. Then open **PowerShell**.
-2. **Copy NOAT's link.** On NOAT's GitHub page, click the green **<> Code** button. Under **HTTPS**, click the copy button next to the link.
-3. **Go to your Documents folder.** In Terminal or PowerShell, type this and press Enter:
+2. **Go to your Documents folder.** In Terminal or PowerShell, type this and press Enter:
 
    ```
    cd ~/Documents
    ```
 
-4. **Download NOAT.** Type `git clone`, a space, paste the link, then a space and a folder name in quotes, and press Enter:
+3. **Download NOAT.** Copy and paste this, then press Enter. The part in quotes is the folder name, so change it if you like:
 
    ```
-   git clone PASTE-THE-LINK-HERE "MISDI Notes"
+   git clone https://github.com/BipinJungRai/NOAT.git "MISDI Notes"
    ```
 
 A folder called `MISDI Notes` appears in your Documents. Now go back to [step 4](02%20Install%20and%20set%20up.md) and open it in Obsidian.

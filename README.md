@@ -46,18 +46,18 @@ There are two ways. Both give you exactly the same vault, so pick whichever suit
 
 #### Option A: Download the ZIP (easiest)
 
-1. At the top of this page, above the list of files, click the green **<> Code** button, then **Download ZIP** at the bottom of the menu. A file called `noat-main.zip` lands in your Downloads.
+1. At the top of this page, above the list of files, click the green **<> Code** button, then **Download ZIP** at the bottom of the menu. A file called `NOAT-main.zip` lands in your Downloads.
 2. Unzip it. A ZIP is a compressed folder:
 
 | Mac | Windows |
 | --- | --- |
-| Double-click `noat-main.zip` | Right-click `noat-main.zip` → **Extract All…** → **Extract** |
+| Double-click `NOAT-main.zip` | Right-click `NOAT-main.zip` → **Extract All…** → **Extract** |
 
 3. Move the folder somewhere permanent, like Documents, iCloud Drive or Google Drive, not Downloads. Rename it if you like, e.g. `MISDI Notes`.
 
 > [!TIP]
 > - Download with **Download ZIP**, not file by file. The ZIP includes hidden settings the dashboards need.
-> - On Windows, if `noat-main` contains another `noat-main` folder, use the inner one: the one with `🏠 Main Dashboard.md` inside.
+> - On Windows, if `NOAT-main` contains another `NOAT-main` folder, use the inner one: the one with `🏠 Main Dashboard.md` inside.
 
 #### Option B: Clone with git (learn a bit of git 😉)
 
@@ -66,17 +66,16 @@ Git is the tool developers use to download projects and keep them up to date. It
 1. **Install git.**
    - **Mac:** open the **Terminal** app and type `git --version`, then press Enter. If git isn't installed, your Mac offers to install it. Click **Install**.
    - **Windows:** download **Git for Windows** from [git-scm.com](https://git-scm.com/downloads) and install it with the default settings. Then open **PowerShell**.
-2. **Copy NOAT's link.** At the top of this page, click the green **<> Code** button. Under **HTTPS**, click the copy button next to the link.
-3. **Go to your Documents folder.** In Terminal (Mac) or PowerShell (Windows), type:
+2. **Go to your Documents folder.** In Terminal (Mac) or PowerShell (Windows), type:
 
    ```
    cd ~/Documents
    ```
 
-4. **Download NOAT.** Type `git clone`, a space, paste the link you copied, then a space and the folder name you want, in quotes:
+3. **Download NOAT.** Copy and paste this, then press Enter. The part in quotes is the folder name, so change it if you like:
 
    ```
-   git clone PASTE-THE-LINK-HERE "MISDI Notes"
+   git clone https://github.com/BipinJungRai/NOAT.git "MISDI Notes"
    ```
 
    A folder called `MISDI Notes` appears in your Documents.
