@@ -29,7 +29,7 @@ Each top-level bullet becomes a card; its sub-bullets are the links in that card
     background: var(--background-secondary);
     border: 1px solid var(--background-modifier-border);
     border-radius: 10px;
-    padding: 10px 14px;
+    padding: 12px 18px !important;  /* space between the box edge and the text */
     margin: 0;
 }
 
@@ -41,6 +41,10 @@ Each top-level bullet becomes a card; its sub-bullets are the links in that card
 
 .callout[data-callout="nav"] li {
     margin-inline-start: 0 !important;
+}
+
+/* Only the links inside a card lose their indent, not the card itself */
+.callout[data-callout="nav"] ul ul li {
     padding-inline-start: 0 !important;
 }
 
